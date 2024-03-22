@@ -76,7 +76,7 @@ if (!$result) {
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">Movies</a>
+        <a class="navbar-brand" href="/movies/">Movies</a>
         <button aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
                 data-bs-target="#navbarNavDropdown" data-bs-toggle="collapse" type="button">
             <span class="navbar-toggler-icon"></span>
@@ -84,7 +84,7 @@ if (!$result) {
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a aria-current="page" class="nav-link active" href="/">Home</a>
+                    <a aria-current="page" class="nav-link active" href="/movies/">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="bi bi-tv-fill"></i> Now Playing</a>

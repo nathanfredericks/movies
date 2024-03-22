@@ -5,21 +5,31 @@ $.ajaxSetup({
 })
 
 function search(){
-    const movie = $("#movie").val();
+    const movie = $("#movie").val()
+    let counter = 0;
     $.get("https://api.themoviedb.org/3/search/movie", {query: movie})
     .done(function(movies) {
-        $("#results").empty();
+        $("#results").empty()
         if(movies.length == 0){
-            $("#results").append("No search results");
+            $("#results").append("No search results")
         }
         console.log(movies)
+        var finalresults = "";
+        finalresults += `<div class="row">`
         movies.results.forEach(function(element){
+            counter++;
             if(element.poster_path){
-            $("#results").append(`<a href="/movies/movie.php?id=${element.id}"> <img src="https://image.tmdb.org/t/p/original/${element.poster_path}" width="200" alt="${element.title}"/><br>${element.title}<br></a>`);
+                finalresults += `<div class="col"> <a href="/movies/movie.php?id=${element.id}"> <img src="https://image.tmdb.org/t/p/original/${element.poster_path}" height="300" width="200" alt="${element.title}"/><br>${element.title}<br> </a> </div>`
             }
             else{
-                $("#results").append(`no image <br> ${element.title} <br>`)
+                finalresults += `<div class="col"> <a href="/movies/movie.php?id=${element.id}"> <img src="PlaceholderMovieImg.jpg" alt="${element.title}"> <br> ${element.title} <br> </a> </div>`
+            }
+            if(counter % 4 == 0 && counter != 0){
+                finalresults += `</div> <div class="row">`
             }
         })
+        finalresults += "</div>"
+        $("#results").html(finalresults);
+
     })
 }
