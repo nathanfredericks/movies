@@ -1,4 +1,10 @@
 <?php
+ 
+
+ error_reporting(E_ALL);
+
+ ini_set('display_errors', 1);
+
     $curl = curl_init();
 
     curl_setopt_array($curl, [
@@ -105,10 +111,10 @@ while($row = mysqli_fetch_array($result)) {
     echo "<p>Reviewer: " . $name . "</p>";
     echo "<p>" . $review . "</p>";
     echo "</li>";
+}
 // Free result set
 mysqli_free_result($result);
 mysqli_close($con);
-}
 ?>
 </ul>
     <form action="create_review.php" method="post">
