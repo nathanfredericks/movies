@@ -10,12 +10,12 @@ function search(){
     .done(function(movies) {
         $("#results").empty();
         if(movies.length == 0){
-            $("#results").append("No search results");
+            $("#results").append("No search results")
         }
         console.log(movies)
         movies.results.forEach(function(element){
             if(element.poster_path){
-            $("#results").append(`<a href="/movies/movie.php?id=${element.id}"> <img src="https://image.tmdb.org/t/p/original/${element.poster_path}" width="200" alt="${element.title}"/><br>${element.title}<br></a>`);
+                $("#results").append(`<div class="col"> <a href="/movies/movie.php?id=${element.id}"> <img src="https://image.tmdb.org/t/p/original/${element.poster_path}" width="200" alt="${element.title}"/><br>${element.title}<br></a> </div>`);
             }
             else{
                 $("#results").append(`no image <br> ${element.title} <br>`)
@@ -23,3 +23,4 @@ function search(){
         })
     })
 }
+
