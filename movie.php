@@ -2,7 +2,7 @@
     $curl = curl_init();
 
     curl_setopt_array($curl, [
-    CURLOPT_URL => "https://api.themoviedb.org/3/movie/" . htmlspecialchars($_GET["id"]) . "?language=en-US",
+    CURLOPT_URL => "http://api.themoviedb.org/3/movie/" . htmlspecialchars($_GET["id"]) . "?language=en-US",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
@@ -18,6 +18,7 @@
     $response = curl_exec($curl);
     $status_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     if ($status_code !== 200) {
+        echo curl_error($curl);
         header("HTTP/1.0 404 Not Found");
         include "404.html";
         exit();
