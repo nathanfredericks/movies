@@ -15,7 +15,7 @@ function search(){
         console.log(movies)
         movies.results.forEach(function(element){
             if(element.poster_path){
-            $("#results").append(`<img src="https://image.tmdb.org/t/p/original/${element.poster_path}" width="200" alt="${element.title}"/><br>${element.title}<br>`);
+            $("#results").append(`<a href="http://localhost/movies/movie.php?id=${element.id}"> <img src="https://image.tmdb.org/t/p/original/${element.poster_path}" width="200" alt="${element.title}"/><br>${element.title}<br></a>`);
             }
             else{
                 $("#results").append(`no image <br> ${element.title} <br>`)
