@@ -8,8 +8,9 @@ USE reviews_db;
 CREATE TABLE IF NOT EXISTS review (
     id INT AUTO_INCREMENT PRIMARY KEY,
     movie_id INT NOT NULL,
-    name VARCHAR(50) NOT NULL,
-    review VARCHAR(250) NOT NULL,
+    username VARCHAR(50) NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    review VARCHAR(500) NOT NULL,
     added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
