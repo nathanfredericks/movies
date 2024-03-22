@@ -104,10 +104,14 @@ if (!$result) {
 </nav>
 <div class="container mt-3">
     <div class="row">
-        <div class="col-3">
-            <img class="img-fluid rounded" src="https://image.tmdb.org/t/p/w342/<?php echo $movie[
-                "poster_path"
-            ]; ?>"  >
+        <div class="col-3 text-center">
+            <?php
+            if ($movie["poster_path"]) {
+                echo "<img class=\"img-fluid rounded\" src=\"https://image.tmdb.org/t/p/w342/" . $movie["poster_path"] . "\">";
+            } else {
+                echo "<img class=\"img-fluid rounded\" src=\"PlaceholderMovieImg.jpg\">";
+            }
+            ?>
         </div>
         <div class="col-9">
             <h1>
