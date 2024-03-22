@@ -27,10 +27,22 @@
     curl_close($curl);
 
     if ($err) {
-        echo "cURL Error #:" . $err;
+        include "500.html";
+        exit();
     } else {
         $movie = json_decode($response, true);
     }
+
+    $con = mysqli_connect("localhost", "reviews_user", "m0v13s", "reviews_db");
+
+    // Check connection
+    if (mysqli_connect_errno()) {
+        include "500.html";
+        exit();
+    }
+
+    $sql_statement = "SELECT name, review FROM review WHERE movie_id='" . htmlspecialchars($_GET["id"]) . "' ORDER BY added DESC LIMIT 10;";
+    $result = mysqli_query($con, $sql_statement);
 ?>
 <!doctype html>
 <html lang="en">
@@ -82,6 +94,33 @@
         $release_date = new DateTimeImmutable($movie["release_date"]);
         echo "<p><strong>Release Date: </strong>" . $release_date->format('F n, Y') . "</p>";
     ?>
+    <h1>Most Recent Reviews</h1>
+    <ul>
+<?php
+while($row = mysqli_fetch_array($result)) {
+    $name = $row['name'];
+    $review = $row['review'];
+    echo "<li>";
+    echo "<p>Reviewer: " . $name . "</p>";
+    echo "<p>" . $review . "</p>";
+    echo "</li>";
+// Free result set
+mysqli_free_result($result);
+mysqli_close($con);
+}
+?>
+</ul>
+    <form action="create_review.php" method="post">
+        <input name="movie_id" id="movie_id" type="hidden" value="<?php echo $movie["id"] ?>">
+
+        <label for="name">Name:</label>
+        <input name="name" id="name" type="text">
+
+        <label for="review">Review:</label>
+        <textarea name="review" id="review"></textarea>
+
+        <button type="submit">Add Review</button>
+    </form>
 </div>
 <script crossorigin="anonymous"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
