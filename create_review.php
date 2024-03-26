@@ -13,9 +13,13 @@
     $review = $_POST["review"];
 
     $sql_statement = "INSERT INTO review (movie_id, username, title, review) VALUES ('$movie_id', '$username', '$title', '$review')";
-    $result = mysqli_query($con, $sql_statement);
-    mysqli_free_result($result);
-    mysqli_close($con);
-    header("Location: /movies/movie.php?id=" . $movie_id);
-    exit();
+    if (mysqli_query($con, $sql_statement)) {
+        mysqli_close($con);
+        header("Location: /movies/movie.php?id=" . $movie_id);
+        exit();
+    } else {
+        mysqli_close($con);
+        include "500.html";
+        exit();
+    }
 ?>

@@ -11,9 +11,7 @@
     $review_id = $_POST["review_id"];
 
     $sql_statement = "DELETE FROM review WHERE id='$review_id'";
-    $result = mysqli_query($con, $sql_statement);
-    mysqli_free_result($result);
-    if (mysqli_affected_rows($con) == 1) {
+    if (mysqli_query($con, $sql_statement)) {
         mysqli_close($con);
         header("Location: /movies/movie.php?id=" . $movie_id);
         exit();
