@@ -116,11 +116,13 @@ if (!$result) {
         <div class="col-9">
             <h1>
                 <?php echo $movie["title"]; ?>
-                <a class="btn btn-primary" href="https://www.imdb.com/title/<?php echo $movie[
-                    "imdb_id"
-                ]; ?>" target="_blank">
-                    View on IMDB
-                </a>
+                <?php 
+                    if ($movie["imdb_id"]) {
+                        echo "<a class=\"btn btn-primary\" href=\"https://www.imdb.com/title/" . $movie["imdb_id"] . "\" target=\"_blank\">";
+                        echo "View on IMDB";
+                        echo "</a>";
+                    }
+                ?>
             </h1>
             <h2><?php echo $movie["tagline"]; ?></h2>
             <p><?php echo $movie["overview"]; ?></p>
