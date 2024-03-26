@@ -14,14 +14,15 @@ function search() {
             return;
         }
         var finalResults = "";
-        finalResults += `<div class="row row-cols-2 row-cols-md-4">`
+        finalResults += `<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5">`
         movies.results.forEach(function(element){
             finalResults += `
-                <div class="col text-center">
+                <div class="col">
                     <a href="/movies/movie.php?id=${element.id}">
-                        <img class=\"img-fluid rounded poster\" src="${element.poster_path ? 'https://image.tmdb.org/t/p/w185/' + element.poster_path : 'PlaceholderMovieImg.jpg'}" alt="${element.title} poster"/>
+                        <img class=\"img-fluid rounded\" src="${element.poster_path ? 'https://image.tmdb.org/t/p/w342/' + element.poster_path : 'PlaceholderMovieImg.jpg'}" alt="${element.title} poster"/>
                     </a>
-                    <h1 class="fs-5 fw-medium">${element.title}</h1>
+                    <h1 class="my-1 fs-5 fw-bold">${element.title}</h1>
+                    <p class="text-body-secondary">${moment(element.release_date).format('LL')}</p>
                 </div>`
         })
         finalResults += "</div>"
