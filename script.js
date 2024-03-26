@@ -28,3 +28,9 @@ function search() {
         $("#results").html(finalResults);
     })
 }
+
+$('#movie').keydown(function(e){
+    if (e.keyCode == 13) {
+        search();
+    }
+});
