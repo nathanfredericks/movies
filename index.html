@@ -41,8 +41,10 @@
     </div>
 </nav>
 <div class="container">
-    <input id="movie" type="text" required>
-    <button onclick="search()">Search</button>
+    <div class="input-group my-3">
+        <input id="movie" type="text" class="form-control" placeholder="Movie title" aria-label="Movie title" aria-describedby="search-button">
+        <button class="btn btn-outline-secondary" type="button" id="search-button" onclick="search()">Search</button>
+    </div>      
     <div id="results"></div>
 </div>
 <script crossorigin="anonymous"
