@@ -1,11 +1,10 @@
 <?php
-
-error_reporting(E_ALL);
-
-ini_set("display_errors", 1);
-
+if (!isset($_GET["id"])) {
+    header("HTTP/1.0 404 Not Found");
+    include "404.html";
+    exit();
+}
 $curl = curl_init();
-
 curl_setopt_array($curl, [
     CURLOPT_URL =>
         "http://api.themoviedb.org/3/movie/" .
@@ -22,28 +21,22 @@ curl_setopt_array($curl, [
         "accept: application/json",
     ],
 ]);
-
 $response = curl_exec($curl);
 $status_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 if ($status_code !== 200) {
-    echo curl_error($curl);
     header("HTTP/1.0 404 Not Found");
     include "404.html";
     exit();
 }
 $err = curl_error($curl);
-
 curl_close($curl);
-
 if ($err) {
     include "500.html";
     exit();
 } else {
     $movie = json_decode($response, true);
 }
-
 $con = mysqli_connect("localhost", "reviews_user", "m0v13s", "reviews_db");
-
 // Check connection
 if (mysqli_connect_errno()) {
     include "500.html";
@@ -71,32 +64,31 @@ if (!$result) {
     <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/movies/">Movies</a>
+        <a class="navbar-brand" href="/">Movies</a>
         <button aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
                 data-bs-target="#navbarNavDropdown" data-bs-toggle="collapse" type="button">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a aria-current="page" class="nav-link active" href="/movies/">Home</a>
+                    <a class="nav-link" href="/"><i class="bi bi-tv-fill"></i> Now Playing</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-tv-fill"></i> Now Playing</a>
+                    <a class="nav-link" href="/?list=popular"><i class="bi bi-graph-up"></i> Popular</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-graph-up"></i> Popular</a>
+                    <a class="nav-link" href="/?list=top_rated"><i class="bi bi-chat-left-heart-fill"></i> Top Rated</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-chat-left-heart-fill"></i> Top Rated</a>
+                    <a class="nav-link" href="/?list=upcoming"><i class="bi bi-graph-up-arrow"></i> Upcoming</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-graph-up-arrow"></i> Upcoming</a>
+                    <a class="nav-link" href="/search.html"><i class="bi bi-search"></i> Search</a>
                 </li>
             </ul>
         </div>
@@ -109,7 +101,7 @@ if (!$result) {
             if ($movie["poster_path"]) {
                 echo "<img class=\"img-fluid rounded\" src=\"https://image.tmdb.org/t/p/w342/" . $movie["poster_path"] . "\">";
             } else {
-                echo "<img class=\"img-fluid rounded\" src=\"PlaceholderMovieImg.jpg\">";
+                echo "<img class=\"img-fluid rounded\" src=\"placeholder.jpg\">";
             }
             ?>
         </div>
@@ -201,7 +193,6 @@ if (!$result) {
             $title = $row["title"];
             $review = $row["review"];
             $added = $row["added"];
-            
             echo "<div class=\"col mb-3 \">";
             echo "<div class=\"card\">";
             echo "<div class=\"card-body\">";
@@ -219,7 +210,6 @@ if (!$result) {
         }
         echo "</div>";
     }
-
     // Free result set
     mysqli_free_result($result);
     mysqli_close($con);
@@ -229,6 +219,5 @@ if (!$result) {
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src=" https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js "></script>
-<script src="script.js"></script>
 </body>
 </html>

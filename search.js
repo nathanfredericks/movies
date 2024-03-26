@@ -10,7 +10,7 @@ function search() {
     .done(function(movies) {
         $("#results").empty()
         if (movies.total_results == 0) {
-            $("#results").append("<p>No search results.</p>");
+            $("#results").append('<p class="text-center text-body-secondary fs-3 m-3">No search results.</p>');
             return;
         }
         var finalResults = "";
@@ -18,8 +18,8 @@ function search() {
         movies.results.forEach(function(element){
             finalResults += `
                 <div class="col">
-                    <a href="/movies/movie.php?id=${element.id}">
-                        <img class=\"img-fluid rounded\" src="${element.poster_path ? 'https://image.tmdb.org/t/p/w342/' + element.poster_path : 'PlaceholderMovieImg.jpg'}" alt="${element.title} poster"/>
+                    <a href="/movie.php?id=${element.id}">
+                        <img class=\"img-fluid rounded\" src="${element.poster_path ? 'https://image.tmdb.org/t/p/w342/' + element.poster_path : 'placeholder.jpg'}" alt="${element.title} poster"/>
                     </a>
                     <h1 class="my-1 fs-5 fw-bold">${element.title}</h1>
                     <p class="text-body-secondary">${moment(element.release_date).format('LL')}</p>
@@ -28,6 +28,10 @@ function search() {
         finalResults += "</div>"
         $("#results").html(finalResults);
     })
+}
+
+function clearSearch() {
+    $('#movie').val("");
 }
 
 $('#movie').keydown(function(e){
