@@ -1,5 +1,9 @@
 <?php
-    $con = mysqli_connect("localhost", "reviews_user", "m0v13s", "reviews_db");
+    $host = $_ENV["MYSQL_HOST"] ?? "localhost";
+    $user = $_ENV["MYSQL_USER"] ?? "reviews_user";
+    $password = $_ENV["MYSQL_PASSWORD"] ?? "m0v13s";
+    $db = $_ENV["MYSQL_DATABASE"] ?? "reviews_db";
+    $con = mysqli_connect($host, $user, $password, $db);
     // Check connection
     if (mysqli_connect_errno()) {
         include "500.html";
@@ -10,7 +14,7 @@
     $sql_statement = "DELETE FROM review WHERE id='$review_id'";
     if (mysqli_query($con, $sql_statement)) {
         mysqli_close($con);
-        header("Location: /movies/movie.php?id=" . $movie_id);
+        header("Location: /movie.php?id=" . $movie_id);
         exit();
     } else {
         mysqli_close($con);
